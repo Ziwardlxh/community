@@ -1,9 +1,7 @@
 package cn.lxh.community.mapper;
 
 import cn.lxh.community.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -13,4 +11,6 @@ public interface UserMapper {
     @Options(useGeneratedKeys = true,keyProperty = "id")
     void insert(User user);
 
+    @Select("select * from user where token = #{token}")
+    User findByToken(@Param("token") String token);
 }

@@ -5,6 +5,7 @@
 [ES](https://elasticsearch.cn)  
 [Github OAuth](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)  
 [OKHttp](https://square.github.io/okhttp/)
+[Lombok](https://projectlombok.org/)
 
 
 ## 工具

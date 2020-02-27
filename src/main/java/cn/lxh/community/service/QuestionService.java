@@ -4,6 +4,7 @@ import cn.lxh.community.dto.PaginationDTO;
 import cn.lxh.community.dto.QuestionDTO;
 import cn.lxh.community.exception.CustomizeErrorCode;
 import cn.lxh.community.exception.CustomizeException;
+import cn.lxh.community.mapper.QuestionExtMapper;
 import cn.lxh.community.mapper.QuestionMapper;
 import cn.lxh.community.mapper.UserMapper;
 import cn.lxh.community.model.Question;
@@ -25,6 +26,9 @@ public class QuestionService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -116,10 +120,13 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(question.getGmtCreate());
+        question.setViewCount(0);
+        question.setCommentCount(0);
+        question.setLikeCount(0);
+        questionMapper.insert(question);
         if (question.getId() == null) {
-            questionMapper.insert(question);
-            question.setGmtCreate(System.currentTimeMillis());
-            question.setGmtModified(question.getGmtCreate());
         } else {
             Question updateQuestion = new Question();
             updateQuestion.setGmtModified(System.currentTimeMillis());
@@ -133,5 +140,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.Question_Not_Found);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

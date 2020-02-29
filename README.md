@@ -10,3 +10,5 @@
 
 ## 工具
 [Git](https://git-scm.com/download)
+
+[Mybayis Generator]mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate

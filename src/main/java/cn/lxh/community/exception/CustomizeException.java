@@ -1,7 +1,5 @@
 package cn.lxh.community.exception;
 
-import com.sun.imageio.plugins.common.I18N;
-
 public class CustomizeException extends RuntimeException {
     private String message;
     private Integer code;

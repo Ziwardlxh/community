@@ -1,7 +1,9 @@
 package cn.lxh.community.controller;
 
 import cn.lxh.community.dto.CommentCreateDTO;
+import cn.lxh.community.dto.CommentDTO;
 import cn.lxh.community.dto.ResultDTO;
+import cn.lxh.community.enums.CommentTypeEnum;
 import cn.lxh.community.exception.CustomizeErrorCode;
 import cn.lxh.community.model.Comment;
 import cn.lxh.community.model.User;
@@ -9,12 +11,10 @@ import cn.lxh.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -29,10 +29,10 @@ public class CommentController {
                        HttpServletRequest request){
         User user =(User) request.getSession().getAttribute("user");
         if(user == null){
-            return ResultDTO.errorof(CustomizeErrorCode.NO_LOGIN);
+            return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
         if(commentCreateDTO == null || StringUtils.isEmpty(commentCreateDTO.getContent().trim())){
-            return ResultDTO.errorof(CustomizeErrorCode.COMMENT_IS_EMPTY);
+            return ResultDTO.errorOf(CustomizeErrorCode.COMMENT_IS_EMPTY);
         }
         Comment comment = new Comment();
         comment.setParentId(commentCreateDTO.getParentId());
@@ -42,7 +42,14 @@ public class CommentController {
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setCommentator(user.getId());
         comment.setLikeCount(0L);
-        commentService.insert(comment);
-        return ResultDTO.okof();
+        commentService.insert(comment,user);
+        return ResultDTO.okOf();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id")Long id){
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
     }
 }

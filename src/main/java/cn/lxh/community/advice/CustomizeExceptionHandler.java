@@ -22,9 +22,9 @@ public class CustomizeExceptionHandler {
         ResultDTO resultDTO;
         if ("application/json".equals(contentType)) {
             if (e instanceof CustomizeException) {
-                resultDTO = ResultDTO.errorof((CustomizeException)e);
+                resultDTO = ResultDTO.errorOf((CustomizeException)e);
             } else {
-                resultDTO = ResultDTO.errorof(CustomizeErrorCode.SYSTEM_ERROR);
+                resultDTO = ResultDTO.errorOf(CustomizeErrorCode.SYSTEM_ERROR);
             }
             try {
                 response.setContentType("application/json");

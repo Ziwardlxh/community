@@ -1,35 +1,43 @@
 package cn.lxh.community.dto;
 
-import cn.lxh.community.exception.CustomizeErrorCode;
 import cn.lxh.community.exception.CustomizeException;
 import cn.lxh.community.exception.ICustomizerErrorCode;
 import lombok.Data;
 
 @Data
-public class ResultDTO {
+public class ResultDTO<T> {
 
     private Integer code;
     private String message;
+    private T data;
 
-    public static ResultDTO errorof(Integer code,String message){
+    public static ResultDTO errorOf(Integer code, String message) {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(code);
         resultDTO.setMessage(message);
         return resultDTO;
     }
 
-    public static ResultDTO errorof(ICustomizerErrorCode customizerErrorCode) {
-        return  errorof(customizerErrorCode.getCode(),customizerErrorCode.getMessage());
+    public static ResultDTO errorOf(ICustomizerErrorCode customizerErrorCode) {
+        return errorOf(customizerErrorCode.getCode(), customizerErrorCode.getMessage());
     }
 
-    public static ResultDTO errorof(CustomizeException e) {
-        return  errorof(e.getCode(),e.getMessage());
+    public static ResultDTO errorOf(CustomizeException e) {
+        return errorOf(e.getCode(), e.getMessage());
     }
 
-    public static ResultDTO okof(){
+    public static ResultDTO okOf() {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(200);
         resultDTO.setMessage("请求成功");
+        return resultDTO;
+    }
+
+    public static <T> ResultDTO okOf(T t) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        resultDTO.setData(t);
         return resultDTO;
     }
 }

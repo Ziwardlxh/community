@@ -26,4 +26,9 @@
     comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
     where id = #{id}
   </update>
+
+
+  <select id="selectRelated" parameterType="cn.lxh.community.model.Question" resultType="cn.lxh.community.model.Question">
+    select * from question where id != #{id} and tag regexp #{tag}
+  </select>
 </mapper>

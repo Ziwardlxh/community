@@ -1,7 +1,6 @@
 package cn.lxh.community.controller;
 
 import cn.lxh.community.dto.PaginationDTO;
-import cn.lxh.community.model.Notification;
 import cn.lxh.community.model.User;
 import cn.lxh.community.service.NotificationService;
 import cn.lxh.community.service.QuestionService;
@@ -30,8 +29,7 @@ public class ProfileController {
                           Model model,
                           @RequestParam(name = "page", defaultValue = "1") Integer page,
                           @RequestParam(name = "size", defaultValue = "5") Integer size) {
-        User user = null;
-        user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return "redirect:/";
         }

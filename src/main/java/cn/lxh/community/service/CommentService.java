@@ -63,10 +63,7 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.Question_Not_Found);
             }
 
-
-
             commentMapper.insert(comment);
-
 //            增加评论数
             Comment parentComment = new Comment();
             parentComment.setId(comment.getParentId());
@@ -80,6 +77,7 @@ public class CommentService {
             if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.Question_Not_Found);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
@@ -89,6 +87,9 @@ public class CommentService {
     }
 
     private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType,Long outerId) {
+        if(receiver == comment.getCommentator()){
+            return;
+        }
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationType.getType());

@@ -8,7 +8,7 @@ import cn.lxh.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,28 +47,28 @@ public class PublishController {
             @RequestParam(value = "tag", required = false) String tag,
             @RequestParam(value = "id", required = false) Long id,
             HttpServletRequest request,
-            Model model
-    ) {
+            Model model) {
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
         model.addAttribute("tags", TagCache.get());
-        if (title == null || title == "") {
+
+        if (StringUtils.isBlank(title)) {
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }
-        if (description == null || description == "") {
+        if (StringUtils.isBlank(description)) {
             model.addAttribute("error", "问题补充不能为空");
             return "publish";
         }
-        if (tag == null || tag == "") {
+        if (StringUtils.isBlank(tag)) {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
 
         String invalid = TagCache.filterInvalid(tag);
-        if (!StringUtils.isEmpty(invalid)) {
-            model.addAttribute("error", "输入非法标签" + invalid);
+        if (StringUtils.isNotBlank(invalid)) {
+            model.addAttribute("error", "输入非法标签:" + invalid);
             return "publish";
         }
 
@@ -77,10 +77,11 @@ public class PublishController {
             model.addAttribute("error", "用户未登录");
             return "publish";
         }
+
         Question question = new Question();
         question.setTitle(title);
-        question.setTag(tag);
         question.setDescription(description);
+        question.setTag(tag);
         question.setCreator(user.getId());
         question.setId(id);
         questionService.createOrUpdate(question);

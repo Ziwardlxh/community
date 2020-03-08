@@ -3,13 +3,18 @@
 <head>
     <title th:text="${question.title}">个人中心</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <script src="/js/jquery-3.2.1.slim.min.js"></script>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.css"/>
     <link rel="stylesheet" href="/css/community.css"/>
-    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/editormd.preview.css">
+    <script src="/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js"  type="application/javascript"></script>
+    <script src="/js/lib/prettify.min.js"  type="application/javascript"></script>
+
 </head>
 <body>
 <div th:insert="navigation :: nav"></div>
@@ -27,8 +32,16 @@
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
 
                 <!--内容-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${question.description}">
+                <div id="question-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <textarea style="display:none;" th:text="${question.description}"></textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
+
+
 
                 <!--标签-->
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
@@ -102,17 +115,18 @@
                     <div class="media">
                         <div class="media-left">
                             <a href="#">
-                                <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
+                                <img class="media-object img-rounded"
+                                     th:src="${session.user != null ? session.user.avatarUrl : '/images/default-avatar.png'}">
                             </a>
                         </div>
                         <div class="media-body">
                             <h5 class="media-heading">
-                                <span th:text="${question.user.name}"></span>
+                                <span th:text="${session.user != null ? session.user.name : '匿名用户'}"></span>
                             </h5>
                             </span>
                         </div>
                     </div>
-                    <input type="hidden" id="question_id" th:value="${question.id}">
+                    <input type="hidden" id="question_id" th:value="${session.id}">
                     <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
                     <button type="button" class="btn btn-success btn-comment" onclick="post()">回复</button>
                 </div>
@@ -139,7 +153,7 @@
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h5>关注一下，获取更多我的Github开源项目</h5>
-                <img class=" img-responsive center-block  img-thumbnail" src="/img/myGithub.jpg" height="100"
+                <img class=" img-responsive center-block  img-thumbnail" src="/images/myGithub.jpg" height="100"
                      width="100"/>
             </div>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
@@ -154,5 +168,6 @@
         </div>
     </div>
 </div>
+<div th:insert="~{footer :: foot}"></div>
 </body>
 </html>

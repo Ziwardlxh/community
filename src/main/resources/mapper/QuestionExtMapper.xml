@@ -13,14 +13,14 @@
     <result column="like_count" jdbcType="INTEGER" property="likeCount" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
   </resultMap>
-  <update id="incView" parameterType="map">
+  <update id="incView" parameterType="cn.lxh.community.model.Question">
     update question
     set
     view_count = view_count + #{viewCount,jdbcType=INTEGER}
     where id = #{id}
   </update>
 
-  <update id="incCommentCount" parameterType="map">
+  <update id="incCommentCount" parameterType="cn.lxh.community.model.Question">
     update question
     set
     comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
@@ -28,7 +28,26 @@
   </update>
 
 
-  <select id="selectRelated" parameterType="cn.lxh.community.model.Question" resultType="cn.lxh.community.model.Question">
+  <select id="selectRelated" parameterType="cn.lxh.community.model.Question" resultMap="BaseResultMap">
     select * from question where id != #{id} and tag regexp #{tag}
+  </select>
+
+  <select id="countBySearch" parameterType="cn.lxh.community.dto.QuestionQueryDTO" resultType="java.lang.Integer">
+    select count(*) from question
+    <where>
+      <if test="search != '' and search != null">
+        and title regexp #{search}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectBySearch" parameterType="cn.lxh.community.dto.QuestionQueryDTO" resultMap="BaseResultMap">
+    select * from question
+    <where>
+      <if test="search != '' and search != null">
+        and title regexp #{search}
+      </if>
+    </where>
+    order by gmt_create desc limit #{page}, #{size}
   </select>
 </mapper>

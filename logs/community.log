@@ -1,0 +1,20 @@
+2020-03-09 11:15:28.179  INFO 10804 --- [restartedMain] cn.lxh.community.CommunityApplication    : Starting CommunityApplication on DESKTOP-69I58QP with PID 10804 (D:\IDEA_project\community\target\classes started by 刘锡华 in D:\IDEA_project\community)
+2020-03-09 11:15:28.182  INFO 10804 --- [restartedMain] cn.lxh.community.CommunityApplication    : No active profile set, falling back to default profiles: default
+2020-03-09 11:15:28.315  INFO 10804 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-03-09 11:15:28.317  INFO 10804 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-03-09 11:15:28.457  WARN 10804 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2020-03-09 11:15:30.370  INFO 10804 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-03-09 11:15:30.380  INFO 10804 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-03-09 11:15:30.380  INFO 10804 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2020-03-09 11:15:30.383  INFO 10804 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.16] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+2020-03-09 11:15:30.384  INFO 10804 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded APR based Apache Tomcat Native library [1.2.16] using APR version [1.6.3].
+2020-03-09 11:15:30.384  INFO 10804 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2020-03-09 11:15:30.384  INFO 10804 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2020-03-09 11:15:31.425  INFO 10804 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.0.2m  2 Nov 2017]
+2020-03-09 11:15:31.532  INFO 10804 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-03-09 11:15:31.534  INFO 10804 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3216 ms
+2020-03-09 11:15:32.310  INFO 10804 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-03-09 11:15:32.385  INFO 10804 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2020-03-09 11:15:32.714  INFO 10804 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-03-09 11:15:32.777  INFO 10804 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-03-09 11:15:32.780  INFO 10804 --- [restartedMain] cn.lxh.community.CommunityApplication    : Started CommunityApplication in 5.683 seconds (JVM running for 7.302)

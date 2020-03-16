@@ -1,12 +1,15 @@
 package cn.lxh.community.controller;
 
 import cn.lxh.community.dto.PaginationDTO;
+import cn.lxh.community.model.Question;
 import cn.lxh.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -20,8 +23,10 @@ public class IndexController {
                         @RequestParam(name = "size", defaultValue = "5") Integer size,
                         @RequestParam(name = "search", required = false) String search) {
         PaginationDTO pagination = questionService.list(search, page, size);
+        List<Question> hotQuestions = questionService.selectHot();
+        model.addAttribute("hotQuestions", hotQuestions);
         model.addAttribute("pagination", pagination);
-        model.addAttribute("search",search);
+        model.addAttribute("search", search);
         return "index";
     }
 }

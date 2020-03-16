@@ -2,7 +2,6 @@ package cn.lxh.community.controller;
 
 import cn.lxh.community.dto.AccessTokenDTO;
 import cn.lxh.community.dto.GithubUser;
-import cn.lxh.community.mapper.UserMapper;
 import cn.lxh.community.model.User;
 import cn.lxh.community.provider.GithubProvider;
 import cn.lxh.community.service.UserService;
@@ -41,7 +40,7 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletResponse response){
+                           HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(redirectUri);
@@ -50,7 +49,7 @@ public class AuthorizeController {
         accessTokenDTO.setClient_secret(clientSecret);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if(githubUser != null && githubUser.getId() != null){
+        if (githubUser != null && githubUser.getId() != null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
@@ -58,20 +57,20 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setAvatarUrl(githubUser.getAvatarUrl());
             userService.createOrUpdate(user);
-            Cookie cookie = new Cookie("token",token);
+            Cookie cookie = new Cookie("token", token);
             response.addCookie(cookie);
             return "redirect:/";
-        }else{
-            log.error("callback get github error,{}",githubUser);
+        } else {
+            log.error("callback get github error,{}", githubUser);
             return "redirect:/";
         }
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
-                         HttpServletResponse response){
+                         HttpServletResponse response) {
         request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("token",null);
+        Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return "redirect:/";

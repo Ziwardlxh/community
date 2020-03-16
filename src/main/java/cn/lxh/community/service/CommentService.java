@@ -2,8 +2,8 @@ package cn.lxh.community.service;
 
 import cn.lxh.community.dto.CommentDTO;
 import cn.lxh.community.enums.CommentTypeEnum;
-import cn.lxh.community.enums.NotificationTypeEnum;
 import cn.lxh.community.enums.NotificationStatusEnum;
+import cn.lxh.community.enums.NotificationTypeEnum;
 import cn.lxh.community.exception.CustomizeErrorCode;
 import cn.lxh.community.exception.CustomizeException;
 import cn.lxh.community.mapper.*;
@@ -82,12 +82,12 @@ public class CommentService {
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
 
-            createNotify(comment,question.getCreator(), commentator.getName(), question.getTitle() , NotificationTypeEnum.REPLY_QUESTION, question.getId());
+            createNotify(comment, question.getCreator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_QUESTION, question.getId());
         }
     }
 
-    private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType,Long outerId) {
-        if(receiver == comment.getCommentator()){
+    private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerId) {
+        if (receiver == comment.getCommentator()) {
             return;
         }
         Notification notification = new Notification();
@@ -109,7 +109,7 @@ public class CommentService {
                 andTypeEqualTo(type.getType());
         commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
-        if(comments.size() == 0){
+        if (comments.size() == 0) {
             return new ArrayList<>();
         }
         Set<Long> commentators = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
@@ -119,7 +119,7 @@ public class CommentService {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdIn(userIds);
         List<User> users = userMapper.selectByExample(userExample);
-        Map<Long, User> userMap =  users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
+        Map<Long, User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
         List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment, commentDTO);

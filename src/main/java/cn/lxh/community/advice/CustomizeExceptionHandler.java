@@ -22,7 +22,7 @@ public class CustomizeExceptionHandler {
         ResultDTO resultDTO;
         if ("application/json".equals(contentType)) {
             if (e instanceof CustomizeException) {
-                resultDTO = ResultDTO.errorOf((CustomizeException)e);
+                resultDTO = ResultDTO.errorOf((CustomizeException) e);
             } else {
                 resultDTO = ResultDTO.errorOf(CustomizeErrorCode.SYSTEM_ERROR);
             }
@@ -36,7 +36,7 @@ public class CustomizeExceptionHandler {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            return  null;
+            return null;
         } else {
             if (e instanceof CustomizeException) {
                 model.addAttribute("message", e.getMessage());

@@ -75,6 +75,14 @@ body {
     padding-left: 0;
 }
 
+.hot-questions {
+    line-height: 20px;
+    font-size: 20px;
+    margin-left: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
 .question-wechat {
     width: 95%;
 }

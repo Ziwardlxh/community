@@ -32,6 +32,10 @@
     select * from question where id != #{id} and tag regexp #{tag}
   </select>
 
+  <select id="selectHot" parameterType="cn.lxh.community.model.Question" resultMap="BaseResultMap">
+    select * from question order by view_count DESC LIMIT 0,5
+  </select>
+
   <select id="countBySearch" parameterType="cn.lxh.community.dto.QuestionQueryDTO" resultType="java.lang.Integer">
     select count(*) from question
     <where>
